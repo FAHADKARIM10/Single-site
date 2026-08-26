@@ -1,0 +1,32 @@
+{
+  "name": "single-site",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "check-content": "tsx scripts/check-content.ts"
+  },
+  "dependencies": {
+    "@radix-ui/react-accordion": "^1.2.13",
+    "clsx": "^2.1.1",
+    "gray-matter": "^4.0.3",
+    "lucide-react": "^1.18.0",
+    "next": "16.2.9",
+    "next-mdx-remote": "^5.0.0",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "tailwind-merge": "^3.6.0",
+    "zod": "^4.1.13"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^25.9.3",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "tailwindcss": "^4",
+    "tsx": "^4.20.6",
+    "typescript": "^6.0.3"
+  }
+}

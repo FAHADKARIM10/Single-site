@@ -1,0 +1,26 @@
+[
+  {
+    "slug": "color-prediction",
+    "name": "Color Prediction Apps",
+    "description": "Wingo-style color and number prediction apps popular across Pakistan — pick a color, number, or size and win a multiplier on the outcome. Every listing here covers the real payout mechanics, the house edge, and how fast JazzCash/Easypaisa withdrawals actually clear, not just the app's own marketing claims.",
+    "icon": "Palette"
+  },
+  {
+    "slug": "aviator-crash",
+    "name": "Aviator & Crash Games",
+    "description": "Rising-multiplier crash games in the Aviator mould, where you cash out before the plane flies away or the multiplier busts. Listings here focus on round speed, whether the crash point is provably fair or opaque, and how the app's cash-out mechanics compare to the original Aviator format.",
+    "icon": "Rocket"
+  },
+  {
+    "slug": "live-casino",
+    "name": "Live Casino Apps",
+    "description": "Apps streaming real dealers for Teen Patti, Baccarat, Dragon Tiger, and Roulette to Pakistani players over mobile data. Each entry covers stream quality on a typical 4G connection, table minimums, and whether the live section is a genuine differentiator or a thin wrapper around the same prediction-game core.",
+    "icon": "Spade"
+  },
+  {
+    "slug": "lottery-games",
+    "name": "Lottery & Number Games",
+    "description": "K3, 5D, and other number-prediction lottery-style games distributed as standalone apps or as a section inside a larger real-money platform. Listings here explain the actual odds structure behind the marketing, since these games are frequently the least transparent about payout mechanics in the entire category.",
+    "icon": "Dices"
+  }
+]

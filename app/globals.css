@@ -1,0 +1,524 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* Brand colours */
+  --color-gold: #3b82f6;
+  --color-gold-dark: #1d4ed8;
+  --color-neon: #00e576;
+  --color-neon-dark: #00b85e;
+  --color-danger: #ff5c5c;
+  --color-danger-dark: #e03e3e;
+
+  /* Dark surface palette */
+  --color-base: #08080b;
+  --color-card: #101018;
+  --color-surface: #15151f;
+  --color-border: #22222f;
+
+  /* Typography */
+  --color-text-primary: #f4f4f8;
+  --color-text-muted: #92929f;
+
+  /* Fonts — self-hosted via next/font */
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* ─── BASE ──────────────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #08080b;
+  color: #f4f4f8;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── SCROLLBAR ─────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #08080b;
+}
+::-webkit-scrollbar-thumb {
+  background: #22222f;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3b82f6;
+}
+
+/* ─── LAYOUT UTILITIES ──────────────────────────────────────────────────────── */
+.section-padding {
+  padding-top: 4.5rem;
+  padding-bottom: 4.5rem;
+}
+
+.container-main {
+  max-width: 1240px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+/* Layered radial-gradient "mesh" background used behind hero/header sections */
+.bg-mesh {
+  background-color: #08080b;
+  background-image:
+    radial-gradient(ellipse 900px 500px at 15% -10%, rgba(59, 130, 246, 0.14) 0%, transparent 60%),
+    radial-gradient(ellipse 700px 500px at 100% 10%, rgba(0, 229, 118, 0.07) 0%, transparent 55%),
+    linear-gradient(180deg, #0a0a10 0%, #08080b 100%);
+}
+
+.bg-surface {
+  background-color: #0b0b12;
+  background-image: linear-gradient(180deg, rgba(59, 130, 246, 0.03) 0%, transparent 15%);
+}
+
+/* ─── TYPOGRAPHY ────────────────────────────────────────────────────────────── */
+.text-gradient-gold {
+  background: linear-gradient(135deg, #3b82f6 0%, #22d3ee 45%, #1d4ed8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #3b82f6;
+}
+.eyebrow::before {
+  content: "";
+  width: 18px;
+  height: 2px;
+  background: linear-gradient(90deg, #3b82f6, transparent);
+  display: inline-block;
+}
+
+.section-divider {
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #3b82f6, transparent);
+  margin: 1rem 0 1.5rem;
+  border-radius: 2px;
+}
+
+/* ─── BUTTONS ───────────────────────────────────────────────────────────────── */
+.btn-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 50%, #1d4ed8 100%);
+  color: #f8fafc;
+  font-weight: 700;
+  padding: 0.875rem 2rem;
+  border-radius: 0.65rem;
+  transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 24px rgba(59, 130, 246, 0.28);
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+.btn-gold:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 32px rgba(59, 130, 246, 0.45);
+}
+.btn-gold:active {
+  transform: translateY(0);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.02);
+  color: #f4f4f8;
+  font-weight: 600;
+  padding: 0.875rem 2rem;
+  border-radius: 0.65rem;
+  border: 1px solid rgba(244, 244, 248, 0.16);
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+.btn-outline:hover {
+  border-color: rgba(59, 130, 246, 0.5);
+  color: #3b82f6;
+  background: rgba(59, 130, 246, 0.05);
+}
+
+/* ─── BADGES / CHIPS ────────────────────────────────────────────────────────── */
+.badge-neon {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.75rem;
+  background: rgba(0, 229, 118, 0.1);
+  border: 1px solid rgba(0, 229, 118, 0.3);
+  border-radius: 9999px;
+  color: #00e576;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.badge-gold {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.75rem;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 9999px;
+  color: #3b82f6;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.badge-risk {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.75rem;
+  background: rgba(255, 92, 92, 0.1);
+  border: 1px solid rgba(255, 92, 92, 0.3);
+  border-radius: 9999px;
+  color: #ff8080;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.75rem;
+  background: #101018;
+  border: 1px solid #22222f;
+  border-radius: 0.6rem;
+  color: #92929f;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+/* ─── SCORE RING ────────────────────────────────────────────────────────────── */
+/* Circular editorial-score badge. Set --score (0-5) and --score-color inline. */
+.score-ring {
+  --pct: calc(var(--score, 0) / 5 * 100%);
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 4.25rem;
+  height: 4.25rem;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background:
+    radial-gradient(closest-side, #0b0b12 66%, transparent 67% 100%),
+    conic-gradient(var(--score-color, #3b82f6) var(--pct), #22222f 0);
+}
+.score-ring span {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: #f4f4f8;
+  letter-spacing: -0.02em;
+}
+.score-ring--sm {
+  width: 2.75rem;
+  height: 2.75rem;
+}
+.score-ring--sm span {
+  font-size: 0.75rem;
+}
+
+/* ─── LINKS ─────────────────────────────────────────────────────────────────── */
+.nav-link {
+  color: #92929f;
+  transition: color 0.2s;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+.nav-link:hover {
+  color: #3b82f6;
+}
+
+/* ─── CARDS ─────────────────────────────────────────────────────────────────── */
+.feature-card {
+  background: linear-gradient(180deg, #12121b 0%, #0e0e16 100%);
+  border: 1px solid #22222f;
+  border-radius: 1.1rem;
+  padding: 1.5rem;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+.feature-card:hover {
+  border-color: rgba(59, 130, 246, 0.35);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(59, 130, 246, 0.08);
+}
+
+.card-flat {
+  background: #101018;
+  border: 1px solid #22222f;
+  border-radius: 1rem;
+  padding: 1.5rem;
+}
+
+.step-card {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: 1.25rem;
+  background: #101018;
+  border: 1px solid #22222f;
+  border-radius: 0.85rem;
+  transition: border-color 0.2s;
+}
+.step-card:hover {
+  border-color: rgba(59, 130, 246, 0.25);
+}
+
+/* ─── STAR RATING ───────────────────────────────────────────────────────────── */
+.star-rating {
+  position: relative;
+  display: inline-block;
+  line-height: 0;
+  flex-shrink: 0;
+}
+.star-rating-track {
+  display: flex;
+  gap: 1px;
+  color: #2a2a38;
+}
+.star-rating-fill {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  display: flex;
+  gap: 1px;
+  color: #3b82f6;
+  white-space: nowrap;
+}
+
+/* ─── GAME TILE (compact app card — icon, name, stars, download) ────────────── */
+.game-tile {
+  background: linear-gradient(180deg, #12121b 0%, #0e0e16 100%);
+  border: 1px solid #22222f;
+  border-radius: 0.9rem;
+  padding: 0.65rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+.game-tile:hover {
+  border-color: rgba(59, 130, 246, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(59, 130, 246, 0.08);
+}
+
+.btn-gold-sm {
+  padding: 0.4rem 0.5rem;
+  font-size: 0.7rem;
+  border-radius: 0.5rem;
+  gap: 0.3rem;
+  width: 100%;
+}
+
+/* ─── SPECS TABLE ───────────────────────────────────────────────────────────── */
+.specs-table-heading-icon {
+  display: grid;
+  place-items: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 0.6rem;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  color: #3b82f6;
+  flex-shrink: 0;
+}
+
+.specs-table-card {
+  background: linear-gradient(180deg, #12121b 0%, #0e0e16 100%);
+  border: 1px solid #22222f;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.3);
+}
+
+/* Gold accent bar across the top of the card */
+.specs-table-card::before {
+  content: "";
+  display: block;
+  height: 3px;
+  background: linear-gradient(90deg, #3b82f6 0%, #22d3ee 45%, #1d4ed8 100%);
+}
+
+.specs-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.specs-table tr {
+  border-bottom: 1px solid #1c1c27;
+  transition: background 0.15s;
+}
+.specs-table tr:last-child {
+  border-bottom: none;
+}
+.specs-table tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.015);
+}
+.specs-table tr:hover {
+  background: rgba(59, 130, 246, 0.05);
+}
+
+.specs-table th,
+.specs-table td {
+  padding: 1.1rem 1.5rem;
+  vertical-align: middle;
+  line-height: 1.4;
+}
+
+.specs-table th {
+  width: 46%;
+  text-align: left;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #92929f;
+}
+
+.specs-table td {
+  width: 54%;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #f4f4f8;
+  text-align: right;
+}
+
+.specs-table-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.specs-table-value {
+  display: inline-block;
+  word-break: break-word;
+}
+
+.specs-table-icon {
+  display: grid;
+  place-items: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  border-radius: 0.55rem;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  color: #3b82f6;
+  flex-shrink: 0;
+}
+
+/* Below sm breakpoint: stack label above value per row instead of
+   cramming two columns — avoids wrapped/overlapping text on phones. */
+@media (max-width: 640px) {
+  .specs-table,
+  .specs-table tbody {
+    display: block;
+  }
+  .specs-table tr {
+    display: flex;
+    flex-direction: column;
+    padding: 0.9rem 1.1rem;
+    gap: 0.4rem;
+  }
+  .specs-table th,
+  .specs-table td {
+    display: block;
+    width: auto;
+    padding: 0;
+    text-align: left;
+  }
+  .specs-table td {
+    font-size: 1rem;
+    padding-left: 2.6rem;
+  }
+}
+
+/* ─── RADIX ACCORDION ───────────────────────────────────────────────────────── */
+[data-radix-accordion-content][data-state="closed"] {
+  display: none;
+}
+
+/* ─── MDX ITEM BODY — minimal prose reset ──────────────────────────────────── */
+.prose-content h2 {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #f4f4f8;
+  margin-top: 2.25rem;
+  margin-bottom: 0.85rem;
+  letter-spacing: -0.01em;
+}
+.prose-content h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #f4f4f8;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+.prose-content p {
+  color: #92929f;
+  line-height: 1.75;
+  margin-bottom: 1rem;
+}
+.prose-content strong {
+  color: #f4f4f8;
+}
+.prose-content ul,
+.prose-content ol {
+  color: #92929f;
+  padding-left: 1.25rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.prose-content ul {
+  list-style: disc;
+}
+.prose-content ol {
+  list-style: decimal;
+}
+.prose-content a {
+  color: #3b82f6;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
