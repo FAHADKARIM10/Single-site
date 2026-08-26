@@ -12,20 +12,28 @@ import { categorySchema, itemFrontmatterSchema, type Category, type Item } from 
 const CONTENT_DIR = path.join(process.cwd(), "content");
 const ITEMS_DIR = path.join(CONTENT_DIR, "items");
 
+// Plain content files (MDX/JSON) aren't part of the module graph, so editing
+// them doesn't trigger Next's dev-mode HMR the way editing a .ts/.tsx file
+// does — caching across requests in dev would keep serving stale content
+// until the server restarted. Only cache in production, where content is
+// static for the life of the build.
+const CACHE_ENABLED = process.env.NODE_ENV === "production";
+
 let categoriesCache: Category[] | null = null;
 let itemsCache: Item[] | null = null;
 
 export function getAllCategories(): Category[] {
   if (categoriesCache) return categoriesCache;
   const raw = JSON.parse(fs.readFileSync(path.join(CONTENT_DIR, "categories.json"), "utf-8"));
-  categoriesCache = raw.map((entry: unknown, i: number) => {
+  const categories = raw.map((entry: unknown, i: number) => {
     const result = categorySchema.safeParse(entry);
     if (!result.success) {
       throw new Error(`content/categories.json[${i}] is invalid: ${result.error.message}`);
     }
     return result.data;
   });
-  return categoriesCache!;
+  if (CACHE_ENABLED) categoriesCache = categories;
+  return categories;
 }
 
 export function getCategoryBySlug(slug: string): Category | undefined {
@@ -67,8 +75,8 @@ export function getAllItems(): Item[] {
     }
   }
 
-  itemsCache = items;
-  return itemsCache;
+  if (CACHE_ENABLED) itemsCache = items;
+  return items;
 }
 
 // Items live at /:slug (no category segment), so lookup is by slug alone.

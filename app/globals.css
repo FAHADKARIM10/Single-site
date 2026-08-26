@@ -229,35 +229,6 @@ body {
   font-weight: 600;
 }
 
-/* ─── SCORE RING ────────────────────────────────────────────────────────────── */
-/* Circular editorial-score badge. Set --score (0-5) and --score-color inline. */
-.score-ring {
-  --pct: calc(var(--score, 0) / 5 * 100%);
-  position: relative;
-  display: grid;
-  place-items: center;
-  width: 4.25rem;
-  height: 4.25rem;
-  border-radius: 50%;
-  flex-shrink: 0;
-  background:
-    radial-gradient(closest-side, #0b0b12 66%, transparent 67% 100%),
-    conic-gradient(var(--score-color, #3b82f6) var(--pct), #22222f 0);
-}
-.score-ring span {
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: #f4f4f8;
-  letter-spacing: -0.02em;
-}
-.score-ring--sm {
-  width: 2.75rem;
-  height: 2.75rem;
-}
-.score-ring--sm span {
-  font-size: 0.75rem;
-}
-
 /* ─── LINKS ─────────────────────────────────────────────────────────────────── */
 .nav-link {
   color: #92929f;
@@ -486,6 +457,7 @@ body {
   margin-top: 2.25rem;
   margin-bottom: 0.85rem;
   letter-spacing: -0.01em;
+  clear: both;
 }
 .prose-content h3 {
   font-size: 1.1rem;
@@ -493,6 +465,7 @@ body {
   color: #f4f4f8;
   margin-top: 1.5rem;
   margin-bottom: 0.5rem;
+  clear: both;
 }
 .prose-content p {
   color: #92929f;
@@ -521,4 +494,41 @@ body {
   color: #3b82f6;
   text-decoration: underline;
   text-underline-offset: 2px;
+}
+
+/* ─── MDX SCREENSHOT FIGURE ─────────────────────────────────────────────────── */
+/* In-article app screenshots, styled like a small phone-frame preview rather
+   than a bare inline <img>, with the alt text doubling as a visible caption. */
+.mdx-screenshot {
+  margin: 1.5rem auto;
+  max-width: 190px;
+}
+.mdx-screenshot-frame {
+  border-radius: 1.25rem;
+  overflow: hidden;
+  border: 1px solid #22222f;
+  background: #101018;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+.mdx-screenshot-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.mdx-screenshot figcaption {
+  margin-top: 0.6rem;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: #5c5c6b;
+  text-align: center;
+}
+@media (min-width: 640px) {
+  .mdx-screenshot--float-right {
+    float: right;
+    margin: 0.25rem 0 1rem 1.75rem;
+  }
+  .mdx-screenshot--float-left {
+    float: left;
+    margin: 0.25rem 1.75rem 1rem 0;
+  }
 }

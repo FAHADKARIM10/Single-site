@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { MDXRemote } from "next-mdx-remote/rsc";
-import { Download, Info, Tag } from "lucide-react";
+import { Download, Info } from "lucide-react";
 import { buildMetadata } from "@/lib/seo";
 import { SITE_DOMAIN } from "@/lib/site";
 import { getAllItems, getCategoryBySlug, getItemBySlug, getRelatedItems } from "@/lib/content";
@@ -18,7 +18,40 @@ import { SpecsTable } from "@/components/item/SpecsTable";
 import { ProsCons } from "@/components/item/ProsCons";
 import { FaqSection } from "@/components/item/FaqSection";
 import { RelatedItems } from "@/components/item/RelatedItems";
-import { ScoreRing } from "@/components/ui/ScoreRing";
+import { StarRating } from "@/components/ui/StarRating";
+
+// In-article screenshots: `<Screenshot src="..." alt="..." float="left"|"right" />`.
+// A block-level MDX component tag, not markdown `![]()` — a markdown image
+// gets wrapped in a <p> by the parser, and this renders a <figure> with a
+// nested <div>/<figcaption>, which isn't legal inside <p> and breaks hydration.
+function Screenshot({ src, alt, float }: { src: string; alt: string; float?: "left" | "right" }) {
+  const floatClass = float === "right" ? " mdx-screenshot--float-right" : float === "left" ? " mdx-screenshot--float-left" : "";
+
+  return (
+    <figure className={`mdx-screenshot${floatClass}`}>
+      <div className="mdx-screenshot-frame">
+        <Image src={src} alt={alt} width={750} height={1333} sizes="190px" />
+      </div>
+      {alt && <figcaption>{alt}</figcaption>}
+    </figure>
+  );
+}
+
+const mdxComponents = { Screenshot };
+
+function DownloadCTA({ name, downloadUrl }: { name: string; downloadUrl: string }) {
+  return (
+    <div className="card-flat flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p className="text-sm sm:text-base font-semibold text-center sm:text-left" style={{ color: "#f4f4f8" }}>
+        Ready to try {name}? Download the latest version now.
+      </p>
+      <a href={downloadUrl} className="btn-gold flex-shrink-0" rel="nofollow sponsored">
+        <Download size={18} aria-hidden />
+        Download {name}
+      </a>
+    </div>
+  );
+}
 
 export function generateStaticParams() {
   return getAllItems().map((item) => ({ slug: item.slug }));
@@ -52,6 +85,18 @@ export default async function ItemPage({
 
   const category = getCategoryBySlug(item.category)!;
   const related = getRelatedItems(item, 6);
+
+  // The body's opening prose (before its first `##` heading) is the intro —
+  // render it under its own "Introduction" heading ahead of the app info table.
+  const firstHeadingIndex = item.body.search(/\n##\s/);
+  const introBody = (firstHeadingIndex === -1 ? item.body : item.body.slice(0, firstHeadingIndex)).trim();
+  const restBody = (firstHeadingIndex === -1 ? "" : item.body.slice(firstHeadingIndex)).trim();
+
+  // Split restBody again so a mid-article download CTA can sit right after
+  // the how-to-get-started sections, ahead of the tips/games reference sections.
+  const midSplitIndex = restBody.indexOf("## Expert Advice");
+  const restBodyEarly = (midSplitIndex === -1 ? restBody : restBody.slice(0, midSplitIndex)).trim();
+  const restBodyLate = (midSplitIndex === -1 ? "" : restBody.slice(midSplitIndex)).trim();
 
   const breadcrumbItems = [
     { name: "Home", href: "/" },
@@ -88,11 +133,7 @@ export default async function ItemPage({
                 <Image src={item.icon} alt="" fill sizes="80px" className="object-cover" priority />
               </div>
               <div className="min-w-0">
-                <span className="badge-gold mb-2 w-fit">
-                  <Tag size={11} aria-hidden />
-                  {category.name}
-                </span>
-                <h1 className="text-2xl md:text-3xl font-black tracking-tight mt-2" style={{ color: "#f4f4f8" }}>
+                <h1 className="text-2xl md:text-3xl font-black tracking-tight" style={{ color: "#f4f4f8" }}>
                   {item.h1 ?? item.name}
                 </h1>
                 <p className="text-sm mt-1" style={{ color: "#92929f" }}>
@@ -101,13 +142,11 @@ export default async function ItemPage({
               </div>
             </div>
 
-            <div className="flex items-center gap-3 sm:ml-auto">
-              <ScoreRing score={item.editorialScore} />
-              <div className="text-xs leading-tight" style={{ color: "#5c5c6b" }}>
-                Editorial
-                <br />
-                Score
-              </div>
+            <div className="flex items-center gap-2 sm:ml-auto">
+              <StarRating score={item.editorialScore} size={20} />
+              <span className="text-sm font-semibold" style={{ color: "#f4f4f8" }}>
+                {item.editorialScore.toFixed(1)}
+              </span>
             </div>
           </div>
 
@@ -136,6 +175,12 @@ export default async function ItemPage({
 
       <section className="section-padding bg-surface">
         <div className="container-main max-w-4xl flex flex-col gap-10">
+          {introBody && (
+            <div className="prose-content max-w-none">
+              <MDXRemote source={`## Introduction\n\n${introBody}`} components={mdxComponents} />
+            </div>
+          )}
+
           <SpecsTable
             name={item.name}
             category={category.name}
@@ -145,9 +190,21 @@ export default async function ItemPage({
             version={item.version}
           />
 
-          <div className="prose-content max-w-none">
-            <MDXRemote source={item.body} />
-          </div>
+          {restBodyEarly && (
+            <div className="prose-content max-w-none">
+              <MDXRemote source={restBodyEarly} components={mdxComponents} />
+            </div>
+          )}
+
+          <DownloadCTA name={item.name} downloadUrl={item.downloadUrl} />
+
+          {restBodyLate && (
+            <div className="prose-content max-w-none">
+              <MDXRemote source={restBodyLate} components={mdxComponents} />
+            </div>
+          )}
+
+          <DownloadCTA name={item.name} downloadUrl={item.downloadUrl} />
 
           <ProsCons pros={item.pros} cons={item.cons} />
 
