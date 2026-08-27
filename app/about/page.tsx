@@ -25,7 +25,6 @@ export default function AboutPage() {
             swapped in.
           </p>
           <p>
-            {/* TODO: Replace with your actual review methodology once defined */}
             Our review process: each app is installed and used directly before it's listed. We
             record the real payout mechanics, the house edge where it can be determined, how
             deposits and withdrawals actually behave via JazzCash/Easypaisa, and the specific
@@ -39,7 +38,6 @@ export default function AboutPage() {
             is. See our <a href="/disclaimer" style={{ color: "#3b82f6" }}>disclaimer</a> for how
             we handle affiliate/monetized download links.
           </p>
-          {/* TODO: Add a real founding date, team info, or company entity details here */}
         </div>
       </div>
     </section>
