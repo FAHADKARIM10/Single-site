@@ -84,7 +84,7 @@ export function softwareApplicationSchema(item: Item) {
     softwareVersion: item.version,
     fileSize: item.fileSize,
     operatingSystem: `Android ${item.minAndroidVersion}+`,
-    applicationCategory: "https://schema.org/MobileApplication",
+    applicationCategory: "GameApplication",
     datePublished: item.publishedAt,
     dateModified: item.updatedAt,
     author: { "@type": "Organization", name: item.developer },

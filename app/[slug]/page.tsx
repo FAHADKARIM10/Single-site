@@ -66,11 +66,13 @@ export async function generateMetadata({
   const item = getItemBySlug(slug);
   if (!item) return {};
 
+  const year = new Date(item.updatedAt).getFullYear();
+
   return buildMetadata({
-    title: `${item.name} — Download for Android`,
+    title: `${item.name} APK Download — Latest Version for Android ${year}`,
     description: item.shortDescription,
     path: `/${item.slug}`,
-    ogImage: `${SITE_DOMAIN}${item.icon}`,
+    ogImage: `${SITE_DOMAIN}/${item.slug}/opengraph-image`,
   });
 }
 
