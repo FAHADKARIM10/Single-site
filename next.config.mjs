@@ -23,6 +23,15 @@ const nextConfig = {
         destination: "/",
         permanent: true,
       })),
+      // /sitemap.xml -> /sitemap/0.xml — Next's generateSitemaps (chunked)
+      // convention only serves /sitemap/[id].xml, never the bare filename.
+      // Search Console and most tooling default to requesting /sitemap.xml,
+      // so this keeps that conventional URL resolving instead of 404ing.
+      {
+        source: "/sitemap.xml",
+        destination: "/sitemap/0.xml",
+        permanent: true,
+      },
     ];
   },
 };
