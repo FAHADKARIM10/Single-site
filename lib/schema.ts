@@ -36,7 +36,11 @@ export const itemFrontmatterSchema = z.object({
   updatedAt: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "updatedAt must be YYYY-MM-DD"),
   icon: z.string().min(1),
   // Optional keyword-rich override for the on-page H1. Falls back to `name` when unset.
+  // Must read as its own sentence, not a copy of another item's h1 with the name swapped.
   h1: z.string().min(1).optional(),
+  // Optional override for the <title> tag. Falls back to a generic template when unset —
+  // set this so every article's title reads distinctly, not just name-swapped boilerplate.
+  title: z.string().min(1).max(70).optional(),
   screenshots: z.array(screenshotSchema).optional(),
   // 70-160 chars: doubles as <meta description> and card blurb. Must be unique per item.
   shortDescription: z.string().min(70).max(160),

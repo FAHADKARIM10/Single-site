@@ -69,7 +69,7 @@ export async function generateMetadata({
   const year = new Date(item.updatedAt).getFullYear();
 
   return buildMetadata({
-    title: `${item.name} APK Download — Latest Version for Android ${year}`,
+    title: item.title ?? `${item.name} APK Download — Latest Version for Android ${year}`,
     description: item.shortDescription,
     path: `/${item.slug}`,
     ogImage: `${SITE_DOMAIN}/${item.slug}/opengraph-image`,

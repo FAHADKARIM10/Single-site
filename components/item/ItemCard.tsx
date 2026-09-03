@@ -24,7 +24,7 @@ export function ItemCard({ item }: { item: Item }) {
         </span>
       </div>
 
-      <Link href={`/${item.slug}#download`} className="btn-gold btn-gold-sm mt-auto" aria-label={`Download ${item.name}`}>
+      <Link href={`/${item.slug}`} className="btn-gold btn-gold-sm mt-auto" aria-label={`Download ${item.name}`}>
         <Download size={12} aria-hidden />
         <span className="hidden sm:inline">Download</span>
       </Link>
